@@ -50,6 +50,7 @@ def train_gpt(config: PipeLineConfig):
     seed_everything(config.seed + 1)
     extras = []
     t = convert_dataframe_to_bool(train)
+
     for identity in IDENTITY_COLUMNS:
         Ip = np.sum(t[identity] & t.target)
         I = np.sum(t[identity])
@@ -60,6 +61,7 @@ def train_gpt(config: PipeLineConfig):
         extra = wiki_subset[wiki_subset[identity] >= 0.333].copy()
         logging.info("Mitigating bias for %s", identity)
         logging.info("Need %d extra samples, got %d", required, len(extra))
+
         if len(extra) > required:
             logging.info("Downsampling extra dataframe")
             extra = extra.sample(required)
