@@ -37,7 +37,7 @@ from toxic.utils import (
     should_decay,
 )
 from toxic.metrics import IDENTITY_COLUMNS
-from toxic.bert import PipeLineConfig, convert_line_gpt, AUX_TARGETS
+from toxic.bert import PipeLineConfig, convert_line_gpt, AUX_TARGETS, GPT2_TOKENIZER
 from toxic.utils import seed_everything, convert_dataframe_to_bool
 from toxic.blocks.nn import GPT2CNN
 

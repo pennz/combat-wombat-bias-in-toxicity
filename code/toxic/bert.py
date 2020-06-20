@@ -49,10 +49,7 @@ def convert_line_cased(text):
 
 from kaggle_runner import may_debug
 def convert_line_gpt(text):
-    try:
-        tokens_a = GPT2_TOKENIZER.tokenize(text)[:GPT_MAX_LEN]
-    except KeyError:
-        may_debug(True)
+    tokens_a = GPT2_TOKENIZER.tokenize(text)[:GPT_MAX_LEN]
     one_token = GPT2_TOKENIZER.convert_tokens_to_ids(tokens_a)
     one_token += [0] * (GPT_MAX_LEN - len(tokens_a))
 
