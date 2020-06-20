@@ -64,26 +64,27 @@ def train_gpt(config: PipeLineConfig):
 
     logging.info("Sampling extra data...")
     seed_everything(config.seed + 1)
-    extras = []
-    t = convert_dataframe_to_bool(train)
+    #extras = []
+    #t = convert_dataframe_to_bool(train)
 
-    for identity in IDENTITY_COLUMNS:
-        Ip = np.sum(t[identity] & t.target)
-        I = np.sum(t[identity])
-        Bp = np.sum(~t[identity] & t.target)
-        B = np.sum(~t[identity])
-        required = (Ip * B - Bp * I) // Bp
+    #for identity in IDENTITY_COLUMNS:
+    #    Ip = np.sum(t[identity] & t.target)
+    #    I = np.sum(t[identity])
+    #    Bp = np.sum(~t[identity] & t.target)
+    #    B = np.sum(~t[identity])
+    #    required = (Ip * B - Bp * I) // Bp
 
-        extra = wiki_subset[wiki_subset[identity] >= 0.333].copy()
-        logging.info("Mitigating bias for %s", identity)
-        logging.info("Need %d extra samples, got %d", required, len(extra))
+    #    extra = wiki_subset[wiki_subset[identity] >= 0.333].copy()
+    #    logging.info("Mitigating bias for %s", identity)
+    #    logging.info("Need %d extra samples, got %d", required, len(extra))
 
-        if len(extra) > required:
-            logging.info("Downsampling extra dataframe")
-            extra = extra.sample(required)
-        extras.append(extra)
+    #    if len(extra) > required:
+    #        logging.info("Downsampling extra dataframe")
+    #        extra = extra.sample(required)
+    #    extras.append(extra)
 
-    enriched = pd.concat([train] + extras, ignore_index=True, sort=False, axis=0)
+    #enriched = pd.concat([train] + extras, ignore_index=True, sort=False, axis=0)
+    enriched = train
 
     logging.info("Tokenizing...")
 
