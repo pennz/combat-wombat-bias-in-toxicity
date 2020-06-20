@@ -1,4 +1,15 @@
+# +
 import os
+os.chdir('/kaggle/working')
+
+import sys
+sys.path.append('/content/hub/combat-wombat-bias-in-toxicity/code')
+package_dir_a = "/kaggle/input/pytorch-pretrained-bert/pytorch-pretrained-BERT"
+sys.path.insert(0, package_dir_a)
+
+print(sys.path)
+# -
+
 import logging
 import multiprocessing
 
@@ -8,6 +19,10 @@ import pandas as pd
 import torch
 from torch import nn
 from torch.utils import data
+
+import subprocess
+subprocess.run('python3 -m pip show apex || ( git clone https://github.com/NVIDIA/apex && cd apex && '
+    'python3 -m pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./ )',
 
 from apex import amp
 from tensorboardX import SummaryWriter
