@@ -22,7 +22,8 @@ from torch.utils import data
 
 import subprocess
 subprocess.run('python3 -m pip show apex || ( git clone https://github.com/NVIDIA/apex && cd apex && '
-    'python3 -m pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./ )',
+               'python3 -m pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./ )',
+               shell=True, check=True)
 
 from apex import amp
 from tensorboardX import SummaryWriter
