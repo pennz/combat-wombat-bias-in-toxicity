@@ -35,6 +35,7 @@ def convert_line_uncased(text):
         ["[CLS]"] + tokens_a + ["[SEP]"]
     )
     one_token += [0] * (MAX_LEN - len(tokens_a))
+
     return one_token
 
 
@@ -42,13 +43,18 @@ def convert_line_cased(text):
     tokens_a = CASED_TOKENIZER.tokenize(text)[:MAX_LEN]
     one_token = CASED_TOKENIZER.convert_tokens_to_ids(["[CLS]"] + tokens_a + ["[SEP]"])
     one_token += [0] * (MAX_LEN - len(tokens_a))
+
     return one_token
 
 
 def convert_line_gpt(text):
-    tokens_a = GPT2_TOKENIZER.tokenize(text)[:GPT_MAX_LEN]
+    try:
+        tokens_a = GPT2_TOKENIZER.tokenize(text)[:GPT_MAX_LEN]
+    except KeyError:
+        tokens_a
     one_token = GPT2_TOKENIZER.convert_tokens_to_ids(tokens_a)
     one_token += [0] * (GPT_MAX_LEN - len(tokens_a))
+
     return one_token
 
 
@@ -59,6 +65,7 @@ def prepare_loss(config: PipeLineConfig):
         bce_loss_3 = nn.BCEWithLogitsLoss(targets[:, 19:20])(
             data[:, 7:18], targets[:, 8:19]
         )
+
         return config.main_loss_weight * bce_loss_1 + bce_loss_2 + bce_loss_3 / 4
 
     return custom_loss

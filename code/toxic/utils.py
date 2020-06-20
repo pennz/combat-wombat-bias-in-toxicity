@@ -25,12 +25,14 @@ def perfect_bias(p):
     """
         The best constant init for a bias layer
     """
+
     return np.log(p / (1 - p))
 
 
 def clip_to_max_len(batch):
     X, y, lengths = map(torch.stack, zip(*batch))
     max_len = torch.max(lengths).item()
+
     return X[:, :max_len], y
 
 
@@ -40,8 +42,10 @@ def should_decay(name):
 
 def convert_dataframe_to_bool(df):
     bool_df = df.copy()
+
     for col_name in ["target"] + IDENTITY_COLUMNS:
         bool_df[col_name] = df[col_name].fillna(0) >= 0.5
+
     return bool_df
 
 
@@ -49,8 +53,10 @@ def build_matrix_fasttext(word2index, model):
     embedding_matrix = np.zeros(
         (max(word2index.values()) + 1, model.get_dimension()), dtype=np.float32
     )
+
     for word, index in word2index.items():
         embedding_matrix[index] = model.get_word_vector(word)
+
     return embedding_matrix
 
 
@@ -105,4 +111,3 @@ class TensorboardAggregator:
             for k, v in self.scalars.items():
                 self.writer.add_scalar(k, v / self.every, self.step)
             self.scalars = None
-

@@ -53,16 +53,16 @@ def train_gpt(config: PipeLineConfig):
     train = pd.read_csv(os.path.join(input_folder, "train.csv"))
 
     logging.info("Reading wiki PL...")
-    wiki_sents = pd.read_csv("../input/wiki_sents.csv")
-    wiki_subset = wiki_sents[
-        (wiki_sents.target < 0.1) & (wiki_sents[IDENTITY_COLUMNS].max(1) >= 0.33)
-    ].copy()
-    wiki_subset.drop(
-        columns=["any_identity", "max_identity", "target_aux"], inplace=True
-    )
-    wiki_subset.iloc[:, :6] = 0.0  # They are not toxic by definition
+    #wiki_sents = pd.read_csv("../input/wiki_sents.csv")
+    #wiki_subset = wiki_sents[
+    #    (wiki_sents.target < 0.1) & (wiki_sents[IDENTITY_COLUMNS].max(1) >= 0.33)
+    #].copy()
+    #wiki_subset.drop(
+    #    columns=["any_identity", "max_identity", "target_aux"], inplace=True
+    #)
+    #wiki_subset.iloc[:, :6] = 0.0  # They are not toxic by definition
 
-    logging.info("Sampling extra data...")
+    #logging.info("Sampling extra data...")
     seed_everything(config.seed + 1)
     #extras = []
     #t = convert_dataframe_to_bool(train)
